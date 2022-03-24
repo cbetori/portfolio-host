@@ -69,4 +69,11 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
+  devServer: {
+    proxy: {
+      '/api': prod
+        ? 'https://sars-cov-2-cb.herokuapp.com/'
+        : 'http://localhost:3002/',
+    },
+  },
 }
