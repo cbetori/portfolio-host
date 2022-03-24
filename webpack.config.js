@@ -40,8 +40,8 @@ module.exports = (_, argv) => {
         remotes: {
           resume:
             argv.mode === 'development'
-              ? 'resume@https://svelte-resume-8qlv8qcrj-cbetori.vercel.app/remoteEntry.js'
-              : 'resume@https://svelte-resume-8qlv8qcrj-cbetori.vercel.app/remoteEntry.js',
+              ? 'resume@http://localhost:3000/remoteEntry.js'
+              : 'resume@https://svelte-resume-phi.vercel.app/remoteEntry.js',
           pokemon:
             argv.mode === 'development'
               ? 'pokemon@http://localhost:3000/remoteEntry.js'
