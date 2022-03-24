@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Header } from './Header'
 import { SideNav } from './SideNav'
 import { Home } from './Home'
-import { Test } from '../remotes/Resume'
+import { Resume } from '../remotes/Resume'
 import Pokemon from 'pokemon/Pokemon'
 import Covid from 'covid/Covid'
 
@@ -46,7 +46,7 @@ export const Wrapper = () => {
               overflow: 'auto',
             }}>
             {currentApp === 'Home' ? <Home /> : null}
-            {currentApp === 'Resume' ? <Test /> : null}
+            {currentApp === 'Resume' ? <Resume /> : null}
             {currentApp === 'Pokemon' ? <Pokemon /> : null}
             {currentApp === 'Covid' ? <Covid /> : null}
           </div>
