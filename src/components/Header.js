@@ -9,6 +9,9 @@ export const Header = () => {
         justifyContent: 'flex-end',
         alignItems: 'center',
         padding: 10,
+
+        padding: '10px 30px 10px 30px',
+        margin: '10px 50px 0px 50px',
       }}>
       <img
         src={profile}

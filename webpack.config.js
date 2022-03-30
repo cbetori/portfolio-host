@@ -2,13 +2,13 @@ const { ModuleFederationPlugin } = require('webpack').container
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const deps = require('./package.json').dependencies
+require('dotenv').config()
 
 const mode = process.env.NODE_ENV || 'production'
 const prod = mode === 'production'
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
   devtool: 'hidden-source-map',
   resolve: {
     extensions: ['.js', '.json', '.css', '.png'],
@@ -33,7 +33,7 @@ module.exports = {
       },
     ],
   },
-
+  mode,
   plugins: [
     new ModuleFederationPlugin({
       name: 'consumer',
@@ -50,6 +50,13 @@ module.exports = {
         covid: prod
           ? 'covid@https://sars-cov-2-cb.herokuapp.com/remoteEntry.js'
           : 'covid@http://localhost:3002/remoteEntry.js',
+
+        portfolio: prod
+          ? 'portfolio@https://betori.herokuapp.com/remoteEntry.js'
+          : 'portfolio@http://localhost:3003/remoteEntry.js',
+        dashboard: prod
+          ? 'dashboard@https://aca-dashboard-go.herokuapp.com/remoteEntry.js'
+          : 'dashboard@http://localhost:3004/remoteEntry.js',
       },
       shared: [
         {
@@ -69,11 +76,4 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
-  devServer: {
-    proxy: {
-      '/api': prod
-        ? 'https://sars-cov-2-cb.herokuapp.com/'
-        : 'http://localhost:3002/',
-    },
-  },
 }
