@@ -43,7 +43,7 @@ module.exports = {
       name: 'consumer',
       filename: 'remoteEntry.js',
       remotes: {
-        portfolio: !prod
+        portfolio: prod
           ? 'portfolio@https://betori.herokuapp.com/remoteEntry.js'
           : 'portfolio@http://localhost:3003/remoteEntry.js',
       },
