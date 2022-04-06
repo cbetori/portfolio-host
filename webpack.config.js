@@ -65,26 +65,26 @@ module.exports = {
       template: './public/index.html',
     }),
     new web.DefinePlugin({
-      REMOTE_RESUME: !prod
+      REMOTE_RESUME: prod
         ? JSON.stringify('https://svelte-resume-phi.vercel.app/remoteEntry.js')
         : JSON.stringify('http://localhost:3000/remoteEntry.js'),
-      REMOTE_POKEMON: !prod
+      REMOTE_POKEMON: prod
         ? JSON.stringify(
             'https://pokemon-battle-cb.herokuapp.com/remoteEntry.js'
           )
         : JSON.stringify('http://localhost:3001/remoteEntry.js'),
-      REMOTE_COVID: !prod
+      REMOTE_COVID: prod
         ? JSON.stringify('https://sars-cov-2-cb.herokuapp.com/remoteEntry.js')
         : JSON.stringify('http://localhost:3002/remoteEntry.js'),
-      REMOTE_PORTFOLIO: !prod
+      REMOTE_PORTFOLIO: prod
         ? JSON.stringify('https://betori.herokuapp.com/remoteEntry.js')
         : JSON.stringify('http://localhost:3003/remoteEntry.js'),
-      REMOTE_DASHBOARD: !prod
+      REMOTE_DASHBOARD: prod
         ? JSON.stringify(
             'https://aca-dashboard-go.herokuapp.com/remoteEntry.js'
           )
         : JSON.stringify('http://localhost:3004/remoteEntry.js'),
-      REMOTE_AMAZON: !prod
+      REMOTE_AMAZON: prod
         ? JSON.stringify(
             'https://amazon-clone-teal-tau.vercel.app/remoteEntry.js'
           )
