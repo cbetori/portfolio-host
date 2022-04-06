@@ -2,10 +2,10 @@ import React from 'react'
 import Spinner from '../components/Spinner'
 import { loadReactComponent } from '../utils/loadComponent'
 
-const Pokemon = () => {
-  const url = REMOTE_POKEMON
-  const remote = 'pokemon'
-  const module = './Pokemon'
+const Amazon = () => {
+  const url = REMOTE_AMAZON
+  const remote = 'amazon'
+  const module = './Amazon'
 
   if (!remote || !url || !module) {
     return <h2>No system specified</h2>
@@ -14,7 +14,7 @@ const Pokemon = () => {
   const Component = React.lazy(
     loadReactComponent(remote, 'default', module, url)
   )
-  console.log(Component)
+
   return (
     <React.Suspense fallback={<Spinner />}>
       <Component />
@@ -22,4 +22,4 @@ const Pokemon = () => {
   )
 }
 
-export default Pokemon
+export default Amazon

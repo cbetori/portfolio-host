@@ -2,6 +2,7 @@ const { ModuleFederationPlugin } = require('webpack').container
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const deps = require('./package.json').dependencies
+const web = require('webpack')
 require('dotenv').config()
 
 const mode = process.env.NODE_ENV || 'production'
@@ -33,30 +34,18 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   mode,
   plugins: [
     new ModuleFederationPlugin({
       name: 'consumer',
       filename: 'remoteEntry.js',
       remotes: {
-        resume: prod
-          ? 'resume@https://svelte-resume-phi.vercel.app/remoteEntry.js'
-          : 'resume@http://localhost:3000/remoteEntry.js',
-
-        pokemon: prod
-          ? 'pokemon@https://pokemon-battle-cb.herokuapp.com/remoteEntry.js'
-          : 'pokemon@http://localhost:3001/remoteEntry.js',
-
-        covid: prod
-          ? 'covid@https://sars-cov-2-cb.herokuapp.com/remoteEntry.js'
-          : 'covid@http://localhost:3002/remoteEntry.js',
-
-        portfolio: prod
+        portfolio: !prod
           ? 'portfolio@https://betori.herokuapp.com/remoteEntry.js'
           : 'portfolio@http://localhost:3003/remoteEntry.js',
-        dashboard: prod
-          ? 'dashboard@https://aca-dashboard-go.herokuapp.com/remoteEntry.js'
-          : 'dashboard@http://localhost:3004/remoteEntry.js',
       },
       shared: [
         {
@@ -74,6 +63,32 @@ module.exports = {
     }),
     new HtmlWebPackPlugin({
       template: './public/index.html',
+    }),
+    new web.DefinePlugin({
+      REMOTE_RESUME: !prod
+        ? JSON.stringify('https://svelte-resume-phi.vercel.app/remoteEntry.js')
+        : JSON.stringify('http://localhost:3000/remoteEntry.js'),
+      REMOTE_POKEMON: !prod
+        ? JSON.stringify(
+            'https://pokemon-battle-cb.herokuapp.com/remoteEntry.js'
+          )
+        : JSON.stringify('http://localhost:3001/remoteEntry.js'),
+      REMOTE_COVID: !prod
+        ? JSON.stringify('https://sars-cov-2-cb.herokuapp.com/remoteEntry.js')
+        : JSON.stringify('http://localhost:3002/remoteEntry.js'),
+      REMOTE_PORTFOLIO: !prod
+        ? JSON.stringify('https://betori.herokuapp.com/remoteEntry.js')
+        : JSON.stringify('http://localhost:3003/remoteEntry.js'),
+      REMOTE_DASHBOARD: !prod
+        ? JSON.stringify(
+            'https://aca-dashboard-go.herokuapp.com/remoteEntry.js'
+          )
+        : JSON.stringify('http://localhost:3004/remoteEntry.js'),
+      REMOTE_AMAZON: !prod
+        ? JSON.stringify(
+            'https://amazon-clone-teal-tau.vercel.app/remoteEntry.js'
+          )
+        : JSON.stringify('http://localhost:3005/remoteEntry.js'),
     }),
   ],
 }

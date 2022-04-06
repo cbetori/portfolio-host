@@ -1,10 +1,18 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Wrapper } from './components/Wrapper'
+import { BrowserRouter } from 'react-router-dom'
+import SideNav from './components/SideNav'
+import Content from './components/Content'
 import './styles/app.css'
 
-export const App = () => {
-  return <Wrapper />
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div className='portfolio-wrapper'>
+        <SideNav />
+        <Content />
+      </div>
+    </BrowserRouter>
+  )
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+export default App

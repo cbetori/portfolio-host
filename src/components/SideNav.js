@@ -1,63 +1,62 @@
 import React from 'react'
 import profile from '../../public/images/profile.png'
+import { useNavigate } from 'react-router-dom'
+import ResumeBtn from '../remotes/ResumeBtn'
 
-export const SideNav = ({ currentApp, setCurrentApp }) => {
+const SideNav = () => {
   const microfrontend = [
     { title: 'Resume' },
     { title: 'Pokemon' },
     { title: 'Covid' },
     { title: 'Portfolio' },
     { title: 'Dashboard' },
+    { title: 'Amazon' },
   ]
 
-  const home = [{ title: 'Home' }]
+  const home = { title: 'Home' }
 
   const me = [
     { title: 'Github', href: 'https://github.com/cbetori' },
     { title: 'LinkedIn', href: 'https://www.linkedin.com/in/collinbetori/' },
   ]
   return (
-    <div id='side-nav' style={{}}>
-      <NavSection header='' list={home} setCurrentApp={setCurrentApp} />
-      <NavSection
-        header='Micro-Frontends'
-        list={microfrontend}
-        setCurrentApp={setCurrentApp}
-      />
-      <NavSection
-        header='Links'
-        list={me}
-        setCurrentApp={setCurrentApp}
-        image={profile}
-      />
+    <div id='side-nav'>
+      <div id='side-nav-wrapper'>
+        <NavSection>
+          <NavList list={[{ title: 'Home' }]} style={{ fontWeight: 500 }} />
+        </NavSection>
+        <NavSection header='Micro-Frontends'>
+          <NavHead title='Micro-Frontends' />
+          <NavList list={microfrontend} />
+        </NavSection>
+        <NavSection>
+          <NavHead title={'Links'} />
+          <NavList list={me} />
+          <NavPic image={profile} />
+        </NavSection>
+        <ResumeBtn />
+      </div>
     </div>
   )
 }
 
-const NavSection = ({ header, list, setCurrentApp, image }) => {
-  const isBold = () => {
-    if (list.length === 1) {
-      return { fontWeight: 500 }
-    }
-  }
-  return (
-    <div className='nav-section' style={isBold()}>
-      <div className='nav-section-head'>{header}</div>
-      <NavList list={list} setCurrentApp={setCurrentApp} />
-      {image ? <NavPic image={image} /> : null}
-    </div>
-  )
+export default SideNav
+
+const NavSection = ({ children }) => {
+  return <div className='nav-section'>{children}</div>
 }
 
-const NavList = ({ list, setCurrentApp }) => {
+const NavHead = ({ title }) => {
+  return <div className='nav-section-head'>{title}</div>
+}
+
+const NavList = ({ list, ...props }) => {
   return list.map(item => {
     return (
-      <div key={item.title} style={{ display: 'flex', width: '100%' }}>
-        {item.href ? (
-          <NavUrl item={item} />
-        ) : (
-          <NavItem item={item} setCurrentApp={setCurrentApp} />
-        )}
+      <div
+        key={item.title}
+        style={{ display: 'flex', width: '100%', ...props.style }}>
+        {item.href ? <NavUrl item={item} /> : <NavItem item={item} />}
       </div>
     )
   })
@@ -65,18 +64,18 @@ const NavList = ({ list, setCurrentApp }) => {
 
 const NavUrl = ({ item }) => {
   return (
-    <div>
-      <a className='nav-item' href={item.href} target='_blank'>
-        {item.title}
-      </a>
-    </div>
+    <a className='nav-item' href={item.href} target='_blank'>
+      {item.title}
+    </a>
   )
 }
 
-const NavItem = ({ item, setCurrentApp }) => {
+const NavItem = ({ item }) => {
+  let navigate = useNavigate()
+  let url = item.title === 'Home' ? '/' : '/' + item.title.toLowerCase()
   return (
-    <div className='nav-item' onClick={() => setCurrentApp(item.title)}>
-      <div>{item.title}</div>
+    <div className='nav-item' onClick={() => navigate(url, { replace: true })}>
+      {item.title}
     </div>
   )
 }
@@ -95,7 +94,6 @@ const NavPic = ({ image }) => {
         style={{
           height: '75px',
           borderRadius: '50%',
-          border: '1px solid grey',
         }}
       />
     </div>

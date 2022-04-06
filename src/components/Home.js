@@ -1,10 +1,12 @@
 import React from 'react'
 
-export const Home = () => {
+const Home = () => {
   return (
-    <div style={{ backgroundColor: 'aqua', height: '100%', borderRadius: 5 }}>
+    <div style={{ backgroundColor: 'aqua', height: '100%' }}>
       This application is basically just a bunch of micro-frontends. Well not
       this specific piece....
     </div>
   )
 }
+
+export default Home

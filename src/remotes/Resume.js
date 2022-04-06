@@ -1,13 +1,24 @@
 import React from 'react'
-import { Resume as _Resume } from 'resume/Resume'
+import { loadSveltComponent } from '../utils/loadComponent'
 
-export const Resume = () => {
-  window.resume.get('./Resume').then(module => {
-    const Resume = module().default
-    new Resume({
-      target: document.getElementById('resume'),
+const Resume = () => {
+  const url = REMOTE_RESUME
+  const remote = 'resume'
+  const module = './Resume'
+
+  const loadModule = async () => {
+    await loadSveltComponent(remote, 'default', module, url)
+    window.resume.get(module).then(module => {
+      const Resume = module().default
+      new Resume({
+        target: document.getElementById('resume'),
+      })
     })
-  })
+  }
 
-  return <div id='resume' style={{ height: '100%', borderRadius: 5 }} />
+  loadModule()
+
+  return <div id='resume' style={{ height: '100%' }} />
 }
+
+export default Resume
